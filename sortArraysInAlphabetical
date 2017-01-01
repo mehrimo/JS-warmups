@@ -1,0 +1,26 @@
+//input - takes two arrays and combines them into one
+var arrOne = ["cecilie", "larrOne"];
+var arrTwo = ["emil", "tobias", "linus"];
+//
+// var children = arrOne.concat(arrTwo);
+//
+// function combine() {
+//
+//   return children.sort();
+// }
+
+
+function combine(arrOne, arrTwo) {
+
+  return arrOne.concat(arrTwo).sort();
+}
+
+
+console.log(combine(arrOne, arrTwo));
+
+
+
+return [...arrOne,...arrTwo].sort();
+//spread operator, rest operator
+// spread operator is taking everything from array one and place into
+// rest operator - picks up the rest of the numbers

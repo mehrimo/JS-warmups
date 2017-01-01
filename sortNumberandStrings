@@ -1,0 +1,56 @@
+var array1 = ["zoe","nicole", "lyric", "nancy", "anna"]; // [Anna","Lyric","Nancy", "Nicole", "Zoe"]
+var array2 = [5,2,7,3]; //[2,3,5,7]
+var array3 = [10,2,100,3]; //[2,3,10,100]
+
+// Stretch, sort this array of objects in ascending order by age.:
+var array4 = [];
+array4[0] = {name: "Zoe", age:10, numDogs:2};
+array4[1] = {name: "Nick", age:2, numDogs:3};
+array4[2] = {name: "Lyric", age:34, numDogs:4};
+array4[3] = {name: "Nancy", age:100, numDogs:1};
+array4[4] = {name: "Anna", age:7, numDogs:2};
+array4[5] = {name: "Edward", age:59, numDogs:0};
+
+
+// var names =  ["zoe","nicole", "lyric", "nancy", "anna"];
+// names.sort()
+//
+// function sortNames(names) {
+//   var result = [];
+//
+// for (var i = 0; i < names.length; i++) {
+//   result.push(names[i][0].toUpperCase() + names[i].slice(1));
+// }
+// result.sort();
+// return result;
+//
+// }
+// sortNames(["zoe","nicole", "lyric", "nancy", "anna"])
+//
+//
+// // names[i][0] = names[i]charAt(0).toUpperCase();
+// // // // function capitalize(message) {
+// // // //   return message.charAt(0).toUpperCase() + message.slice(1);
+// // // // }
+// // // names.sort()
+//
+// function sortNums(arr) {
+//   return arr.sort(function(x,y) {
+//     return x-y;
+//   });
+// }
+
+//outputs
+// var array2 = [5,2,7,3]; //[2,3,5,7]
+// var array3 = [10,2,100,3]; //[2,3,10,100]
+
+function sortObj(arr) {
+  var result = [];
+
+return arr.sort(function(x,y) {
+return x.age - y.age;
+});
+}
+
+// return x.name > y.name
+// to return Names in an object array

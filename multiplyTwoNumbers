@@ -1,0 +1,10 @@
+'use strict';
+
+function mult(x,y) {
+  var result = 0;
+  for (var i = 0; i < y; i++) {
+    result += x;
+  }
+  return result;
+}
+console.log(mult(5,2));

@@ -1,0 +1,30 @@
+var dogs = {'sparky': 1, 'zion':3, 'henry':5, 'lucky':8};
+
+
+//write a function to take the dog ages * 7.
+function changesAges(dogs) {
+
+  for(var key in dogs) {
+  dogs[key] *= 7;
+  }
+
+return dogs;
+}
+console.log(changesAges(dogs));
+//
+// function changesAges(dog) {
+//   var result = {};
+//   for(var key in dogs) {
+//     console.log(key);
+//   }
+//
+// return result
+// }
+
+// write a function to returns the dog names
+function logsdogs(dogs) {
+  for (var key in dogs) {
+    console.log(key);
+  }
+}
+logsdogs(dogs);

@@ -1,0 +1,20 @@
+//  Check if  string has no repeating letters
+
+// (.) capture any letter. .* followed by any sequence of letters including nothing. \1 followed by the first letter we captured. In other words, this will match any string that has at least two of the same letters. Take the opposite of that boolean.
+//====== Using Regex ====
+function isIsogram(str){
+  return !/(\w).*\1/i.test(str)
+}
+
+// ====== Using vanilla javascript
+function isIsogram(str){
+  var i, j;
+  str = str.toLowerCase();
+  for(i = 0; i < str.length; ++i)
+    for(j = i + 1; j < str.length; ++j)
+      if(str[i] === str[j])
+        return false;
+  return true;
+}
+
+//====

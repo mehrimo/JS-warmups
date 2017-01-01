@@ -1,0 +1,21 @@
+function getSum( a, b ) {
+  console.log(a,b,"YOLO")
+  if (a === b) {
+    return a
+  }
+
+  var accumulator = 0;
+
+  if (a < b) {
+    for (var i = a ; i <= b ; i++) {
+      accumulator += a
+      // a++
+    }
+  } else {
+    for (var i = b ; i <= a ; i++) {
+      accumulator += b
+      // b++
+    }
+  }
+  return accumulator
+}

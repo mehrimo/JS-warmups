@@ -1,0 +1,54 @@
+// remove objects that don't have a name
+
+var people = [{name:'A', age: 20}, {name:'B', age: 30}, {}, {name:'', age: 10}];
+
+// first step: look at each of objects
+// the output is array of objects, so create a new array to put them
+// itterate thorugh the arrray
+//name = letter
+function removeBadPeople(people){
+  var result = [];
+
+  for (var i = 0; i < people.length; i++) {
+// enter object key name
+    if (people[i].name) {
+      //test to make sure the code is right
+      // console.log("there is a name");
+      result.push(people[i]);
+    }
+  }
+
+  return result;
+}
+
+console.log(removeBadPeople(people));
+// => [{name:'A', age: 20}, {name:'B', age: 30}];
+
+
+function sumAgesValid(people){
+  // how do I get the sum of all numbers? Take the result array, and get to the objects values
+  var result = 0;
+  var goodPeople = removeBadPeople(people);
+  for (var i = 0; i < goodPeople.length; i++) {
+    result += goodPeople[i].age;
+  }
+  return result;
+}
+
+sumAgesValid(people);
+=> 50
+
+
+function sumAgesAll(people){
+//  var result = 0;
+var result = 0;
+for (var i = 0; i < goodPeople.length; i++) {
+  if (!isNaN(goodPeople[i].age));
+  result += goodPeople[i].age;
+}
+return result;
+}
+
+
+sumAgesAll(people);
+// => 60
