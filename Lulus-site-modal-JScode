@@ -1,0 +1,256 @@
+$(document).ready(function() {
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//		MODALS
+/////////////////////////////////////////////////////////////////////////////////////////
+//		classes:
+//			modal			: will trigger modal. Applied to a element.
+//				reload	: will trigger modal which will reload page once closed. Applied to a element.
+//			close			: explicitly close open modal. Applied to any element.
+//				reload	: explicitly close open modal and reload the page. Applied to any element.
+//			persist		: will load new content into open modal. Applied to input/select element.
+//				reload	: will load new content into open modal and will reload page once closed. Applied to any element.
+//
+//
+/////////////////////////////////////////////////////////////////////////////////////////
+
+		if ( $('.modal').length > 0 || typeof( window.fires_modal) !== 'undefined' )
+		{
+			initializeModalPrompts();
+
+			// events
+			$('#colorbox').on('click', '.close', function(e) {
+				e.preventDefault();
+				if( $(this).hasClass('reload') )
+				{
+					$.colorbox({
+						onClosed:function(){ window.location.assign( window.location.href ); },
+						initialWidth: 100,
+						initialHeight: 100
+					});
+				}
+				else if( $(this).hasClass('continue') )
+				{
+					var redirect = $(this).attr('href');
+					$.colorbox({ onClosed:function()
+						{
+							window.location.href = redirect;
+						},
+						initialWidth: 100,
+						initialHeight: 100
+					});
+				}
+				$.colorbox.close();
+			});
+			$('#colorbox').on('click', '.persist', function(e){
+				e.preventDefault();
+				if( $(this).hasClass('reload') )
+				{
+					$.colorbox({
+						onClosed:function(){ window.location.assign( window.location.href ); },
+						initialWidth: 100,
+						initialHeight: 100
+					});
+				}
+				else
+				{
+					$('#colorbox .body .quickview').hide();
+					setColorbox( $(this).attr('href') );
+				}
+			});
+			$('#colorbox').on('click', '#cboxClose', function(e){
+				$.colorbox.close();
+			});
+			$('#colorbox').on('submit','form.js-generic', function(e){
+				e.preventDefault();	//prevent submission
+				$this = $(this);
+				var form = $this.closest('form');
+				var post_data = form.serializeObject();
+				if( $this.attr( 'name' ) )
+					post_data[ $this.attr( 'name' ) ] = ( $this.attr( 'value' ) ? $this.attr( 'value' ) : '' );
+				var action = form.attr( 'action' );
+				if( location.protocol === 'http:' && action.indexOf( 'https:' ) === 0 )//if https request and on http
+				{
+					var params = form.serialize();
+					if( $this.attr( 'name' ) )
+						params += ( ( params.length > 0 ? '&' : '' ) + $this.attr( 'name ' ) + '=' + ( $this.attr( 'value' ) ? $this.attr( 'value' ) : '' ) );
+					$.ajax( attachColorboxParam( action + '?' + params ), {
+						'type' : 'GET',
+						'dataType' : 'jsonp html',
+						'jsonp' : 'jsonp_callback'
+					})
+					.done( function( markup ) {
+						setColorbox( false, true, false, false, { 'html': markup} );
+					});
+				}
+				else
+				{
+					setColorbox( action, true, post_data );
+				}
+
+				return false; //stop propagation
+			});
+		}
+
+});
+
+function initializeModalPrompts( parent ) {
+	if ( typeof( head ) !== 'undefined' && head.browser.ie && head.browser.version < 8 )
+	{
+		return;
+	}
+
+	if( !parent )
+		parent = $('body');
+
+	setColorbox(function(){
+			var obj = $(this);
+			if ( obj.is('a') ) return obj.attr('href');
+			else if ( obj.is('button') || obj.is('input') ) return obj.closest('form').attr('action');
+		},
+		false,
+		function() {
+			var obj = $(this);
+			if( ! obj.hasClass( 'js-nodata' ) && ( obj.is( 'button' ) || obj.is( 'input' ) ) )
+			{
+				var data;
+				var form = obj.closest('form');
+				if( form.attr('method').toLowerCase() === 'post' )
+				{
+					data = form.serializeObject();
+					if( obj.attr( 'name' ) )
+						data[ obj.attr( 'name' ) ] = ( obj.attr( 'value' ) ? obj.attr( 'value' ) : '' );
+					return data;
+				}
+				else
+				{
+					return form.serialize();
+				}
+			}
+			return false;
+		},
+		parent.find('.modal'),
+		{ initialWidth: 100 }
+		);
+
+	setColorbox( function(){
+			var obj = $(this);
+			if ( obj.is('a') ){ return obj.attr('href'); }
+			else if ( obj.is('button') || obj.is('input') ){ return obj.closest('form').attr('action'); }
+		},
+		false,
+		false,
+		parent.find('.modal.reload'),
+		{
+			innerHeight: 474,
+			onClosed:function(){ window.location.assign( window.location.href ); },
+			initialWidth: 100,
+			initialHeight: 100,
+			fastIframe: false
+		}
+	);
+
+	parent.on('click','a.js-modal-login', function( e ) {
+		//check if logged in
+
+		var logged_in = window.lulus && window.lulus.Logged_in;
+		if( ! logged_in )
+		{
+			e.preventDefault();
+			var $this = $(this);
+			window.forward_url = $this.attr( 'href' );
+
+			setColorbox( '/myaccount/login?forwardto_url=', true, false, $this,
+					{
+						'onClosed' : function() {
+										window.forward_url = null;
+									}
+					});
+            return false;
+		}
+
+	});
+}
+
+function colorboxOnComplete(){
+	//colorboxResize();
+	if ( $('#colorbox #site-gate.body').length > 0 )
+	{
+		$('#colorbox').addClass('shadow');
+	}
+	$(window).on( 'resize', function(){
+		var
+			viewPort = $(window).width(),
+			box = $('#colorbox'),
+			boxWidth = box.outerWidth(),
+			leftVal = (viewPort - boxWidth) / 2;
+		box.css({ 'left' : leftVal });
+	});
+};
+
+function colorboxOnOpen(){
+}
+
+function colorboxOnClosed(){
+	$(document).off( 'cbox_complete' );
+	$(window).off( 'resize' );
+}
+
+function colorboxOnCleanup(){
+	$('#colorbox').removeClass('shadow');
+}
+
+function colorboxResize(){
+	var
+		resize = $('#colorbox .body'),
+		newHeight = resize.outerHeight(),
+		contentHeight = $('#colorbox .wrap').outerHeight(),
+		newWidth = $('#colorbox .wrap').outerWidth();
+	newHeight = parseInt( newHeight ) + 10;
+
+	$(resize).animate({ height : contentHeight + 'px', width : newWidth + 'px' });
+	newHeight = newHeight + 20;
+	var resize = $('#cboxLoadedContent, #cboxContent, #cboxWrapper, #colorbox');
+	resize.css({ height : newHeight + 'px' });
+}
+
+function setColorbox( url_raw, open, data, $element, otherOptions )
+{
+	if( ! $element ) $element = $;
+	var url = false;
+	if( typeof( url_raw ) === 'function' )
+	{
+		url = function () { return attachColorboxParam( url_raw.call( this ) ); };
+	}
+	else if( url_raw )
+		url = attachColorboxParam( url_raw );
+
+	var options = {
+			href: url,
+			open: open,
+			opacity:0.35,
+            fixed: true,
+			data: data,
+			fastIframe: false,
+			reposition: false,
+			transition: "elastic",
+			onComplete: colorboxOnComplete,
+			onLoad: colorboxOnOpen,
+			onClosed: colorboxOnClosed,
+			onCleanup: colorboxOnCleanup,
+			scrolling: false,
+			initialWidth: 100,
+			initialHeight: 100
+		};
+	if( otherOptions )
+	{
+		for ( var option in otherOptions ) { options[option] = otherOptions[option]; }
+	}
+	$element.colorbox(options);
+
+}
+
+function attachColorboxParam( url )
+{
+	return url + ( url.indexOf( '?' ) != -1 ? '&' : '?' ) + 'colorbox=y';
+}
