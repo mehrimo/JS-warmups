@@ -9,7 +9,7 @@ var pets = ['cat', 'dog', 'rat'];
  function findPets(pets) {
  for (var i = 0; i < pets.length; i++) {
   pets[i] = pets[i]
-}
+  }
 }
 console.log(pets[1]);
 
