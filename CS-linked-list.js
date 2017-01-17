@@ -26,6 +26,7 @@ function push(value) {
 push("hello");
 push("world");
 
+
 while (tail !==null) {
   console.log(count, tail.value);
   // count--;
