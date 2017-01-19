@@ -13,6 +13,14 @@ function fizzBuzz() {
       console.log(n);
     }
   }
-//
-//
-// fizzBuzz();
+
+
+fizzBuzz();
+
+// Ternary Solution
+function ternaryFizzer() {
+  let fizzBuzzString = '';
+  for (let i = 0; i < 100; i++) {
+    fizzBuzzString += i % 15 ? 'FizzBuzz' : i % 5 ? 'Buzz' : i % 3 ? 'Fizz' : i;
+  }
+}
