@@ -1,3 +1,8 @@
+
+  // temp = alist[i]
+  // alist[i] = alist[j]
+  // alist[j] = temp
+
 function (array, compare) {
   // Not an array, empty or array of 1 is already sorted
   if (!Array.isArray(array) || array.length < 2) {
