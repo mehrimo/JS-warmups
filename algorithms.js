@@ -1,3 +1,4 @@
+'use strict';
 // write a function for O(1)
 var pets = ['cat', 'dog', 'rat'];
  function findPets(pets) {
@@ -12,5 +13,6 @@ var pets = ['cat', 'dog', 'rat'];
   }
 }
 console.log(pets[1]);
+
 
 // write a function for O(n^2)
