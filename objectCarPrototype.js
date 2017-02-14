@@ -10,7 +10,7 @@ function Person(name){
   this.name = name;
 }
 // put the methods on the prototye
-Person.prorotype.sayHello = function sayHello(){
+Person.prototype.sayHello = function sayHello(){
 console.log(“hello”)
 
 var person1 = new Person(‘person1);
