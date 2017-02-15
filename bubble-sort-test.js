@@ -13,3 +13,5 @@ function bubbleSort(arr) {
   }
   return arr;
 }
+
+bubbleSort([2,8,3,1])
