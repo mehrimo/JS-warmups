@@ -15,6 +15,21 @@ return (myArr);
 var myArr = [0,1,2,3,4,5];
 console.log(swap(1,2));
 
+//swap values with three args
+function swapValues(arr, val1, val2) {
+  var index1 = arr.indexOf(val1);
+  var index2 = arr.indexOf(val2);
+
+  if(index1 === -1 || index2 === -1){
+  return "one of the numbers does not exist"
+}
+
+arr[index1] = val2;
+arr[index2] = val1;
+
+return (arr);
+}
+
 //using the array.prototype
 // Array.prototype.swapItems = function(a, b){
 //     this[a] = this.splice(b, 1, this[a])[0];
