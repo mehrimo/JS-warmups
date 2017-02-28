@@ -106,7 +106,10 @@ console.log(replaceValue(['a','b'], 1, 'dog'));
 // Example: cellValue(["make", "model", "year", "weight"], ["Chevy", "Nova", 1977, 1999], "model") would return "Nova"
 // Example: cellValue(["make", "model", "year", "weight"], ["Chevy", "Nova", 1977, 1999], "year") would return 1977
 
-
+// function cellValue(arrNames, arrValues, fieldName){
+//   var index = [arrValues[arrOfFieldNames.indexOf(fieldname)]]
+//   return value
+// }
 
 -------------
 // Use methods on arrays
@@ -124,7 +127,15 @@ console.log(replaceValue(['a','b'], 1, 'dog'));
 //
 // See unshift, push
 
+function sandwich(arr, val) {
+  console.log(arr);
+  arr.unshift(val);
+  arr.push(val);
+  console.log(arr)
 
+}
+
+sandwich(['a', 'b'], 'z');
 
 // Define a function named sumEdges that takes 1 argument:
 //  - an array
@@ -136,7 +147,11 @@ console.log(replaceValue(['a','b'], 1, 'dog'));
 //
 // See shift, pop
 
+function sumEdges(arr){
+  return arr.shift() + arr.pop();
 
+}
+sumEdges([3,4,5])
 
 // Define a function named bassackwards that takes 2 arguments:
 //  - an array
@@ -149,6 +164,20 @@ console.log(replaceValue(['a','b'], 1, 'dog'));
 // See docs for most appropriate method
 
 
+// option 1
+function bassackwards(arr, delimiter){
+  var newArr = [];
+  for(var i = 0; i < arr.length; i++){
+    newArr.unshift(arr[i]);
+  }
+  console.log(newArr.join(delimiter))
+}
+
+bassackwards([3,4,5], "-")
+
+//option 2 on one line using reverse
+console.log(arr.reverse().join(delimiter))
+
 // Define a function named sortNumbers that takes  argument:
 //  - an array
 //
@@ -156,7 +185,12 @@ console.log(replaceValue(['a','b'], 1, 'dog'));
 //
 // Example: sortNumbers([1,11,2,22,56,7]) would return [ 1, 2, 7, 11, 22, 56 ]
 
+function sortNumbers(arr) {
+  //to sort numbers (a-b)
+   return arr.sort((function(a, b){return a-b}));
 
+}
+console.log(sortNumbers([1,11,2,22,56,7]));
 
 // Define a function named gather that takes 3 arguments, all arrays:
 //
@@ -166,7 +200,12 @@ console.log(replaceValue(['a','b'], 1, 'dog'));
 //
 // NOTE: do not use any kind of loop to accomplish this.  Find the appropriate method in the docs
 
+function gather(arr1, arr2, arr3){
+  var singleArr = arr1.concat(arr2, arr3).sort();
+  return singleArr;
+};
 
+gather(['z','y'], ['a'], ['p', 'q', 'd'])
 
 // Define a function named window that takes 3 arguments:
 //  - an array
@@ -177,9 +216,14 @@ console.log(replaceValue(['a','b'], 1, 'dog'));
 //
 // Example: window([ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i' ], 3, 6) would return [ 'd', 'e', 'f' ]
 //
-// See slice
+// slice does not mutate the original array
+// spliace DOES mutates the original arrays
 
+function sliceArr(arr, start, end){
+ return arr.slice(start, end);
+};
 
+sliceArr([ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i' ], 3, 6)
 
 // Define a function named paginate that takes 3 arguments:
 //  - an array
@@ -194,7 +238,22 @@ console.log(replaceValue(['a','b'], 1, 'dog'));
 // Example: paginate([ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i' ], 3, 2) would return [ 'e', 'f' ]
 // Example: paginate([ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i' ], 1, 5) would return [ 'a', 'b', 'c', 'd', 'e' ]
 
+function paginate(arr, pgNum, pgSize){
+  var numElements = arr.length;
+  var result = [];
 
+  if(numElements){
+    var elementsToDisplayPerPage = numElements / pgSize;
+  }
+
+  for (var i = 0; i< pgSize; i++){
+    result.push(arr[i]);
+  }
+  console.log(result);
+}
+
+
+paginate([ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i' ], 1, 3) 
 
 // Define a function named deleteBetween that takes 3 arguments:
 //  - an array
